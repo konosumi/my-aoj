@@ -94,7 +94,6 @@ vector <int>shellSort(vector <int>A, int N) {
   return A;
 }
 
-
 int main() {
   int N;
   cin >> N;
