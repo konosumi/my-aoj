@@ -6,6 +6,7 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include <queue>
 using namespace std;
 
 struct Process {
@@ -18,24 +19,25 @@ int main() {
   cin >> N >> q;
 
   // プロセスの格納
-  vector <Process>queue(N);
+  queue <Process>queues;
   for (int i = 0; i < N; i++) {
-    cin >> queue.at(i).name >> queue.at(i).time;
+    Process p = Process();
+    cin >> p.name >> p.time;
+    queues.push(p);
   }
 
   int time = 0;
-
   // プロセスが残っている間は続ける
-  while (queue.size() > 0) {
-    // キューの先頭からプロセスをひとつ取り出す
-    Process p = queue.front();
-    queue.erase(queue.begin(), queue.begin() + 1);
+  while (queues.size() > 0) {
+    // キューからプロセスをひとつ取り出す
+    Process p = queues.front();
+    queues.pop();
 
     if (p.time > q) {
       // 100msをプロセスで消費させて、キューの末尾で順番待ちさせる
       time += q;
       p.time -= q;
-      queue.push_back(p);
+      queues.push(p);
     } else {
       time += p.time;
       cout << p.name << ' ' << time << endl;
