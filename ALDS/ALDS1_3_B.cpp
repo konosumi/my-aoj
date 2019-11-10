@@ -34,7 +34,7 @@ int main() {
     queues.pop();
 
     if (p.time > q) {
-      // 100msをプロセスで消費させて、キューの末尾で順番待ちさせる
+      // qmsをプロセスで消費させて、キューの末尾で順番待ちさせる
       time += q;
       p.time -= q;
       queues.push(p);
