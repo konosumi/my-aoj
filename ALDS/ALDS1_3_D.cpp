@@ -1,100 +1,89 @@
 /**
  * Areas on the Cross-Section Diagram
  * http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_3_D&lang=ja
+ * 参考：Areas on the Cross-Section Diagram 解き方メモ
+ * https://mtdtx9.hatenablog.com/entry/2017/04/24/230941
  */
 
 #include<iostream>
 #include<stack>
-#include<list>
 using namespace std;
 
-/*
-void trace(stack <char>A) {
-  stack <char>B;
+struct Area {
+  int index;
+  int size;
+};
+
+Area mkArea(int index, int size) {
+  Area area = Area();
+  area.index = index;
+  area.size = size;
+  return area;
+}
+
+void trace(stack <Area>A) {
+  stack <Area>B;
   while (A.size()) {
     B.push(A.top());
     A.pop();
   }
 
-  while (B.size()) {
-    cout << B.top();
+  while (B.size() > 0) {
+    cout << ' ' << B.top().size;
     B.pop();
   }
- 
-  cout << endl;
 }
-*/
 
-struct Area {
-  int size;
-  int distance;
-  bool isFreeze;
-};
+int areaTotalSize(stack <Area>A) {
+  int size = 0;
+  while (A.size() > 0) {
+    Area area = A.top();
+    A.pop();
+    size += area.size;
+  }
+
+  return size;
+}
 
 int main() {
   // cin.tie(0);
   // ios::sync_with_stdio(false);
 
-  stack <char>slopeStack;
   stack <Area>areaStack;
+  stack <int>slopeIndexStack;
   char slope;
-  while (true) {
+  int index = -1;
+  while (++index <= 20000) {
     cin >> slope;
     if (cin.eof()) {
       break;
     } else if (slope == '\\') {
-      slopeStack.push(slope);
-    } else if (slope == '_') {
-      if (slopeStack.size()) {
-        slopeStack.push(slope);
-      }
+      slopeIndexStack.push(index);
     } else if (slope == '/') {
-      if (slopeStack.empty()) {
+      if (slopeIndexStack.empty()) {
         continue;
       }
-      Area area = Area();
-      area.size = 0;
-      area.distance = 0;
-      if (areaStack.size() > 0) {
-        Area area2 = areaStack.top();
-        if (!area2.isFreeze) {
-          area = area2;
-          areaStack.pop();
-        }
-      }
 
-      while (slopeStack.size() > 0) {
-        char slopeTop = slopeStack.top();
-        slopeStack.pop();
-        if (slopeTop == '_') {
-          area.distance++;
-        } else if (slopeTop == '\\') {
-          area.size += area.distance + 1;
-          area.distance += 2;
+      int slopeIndex = slopeIndexStack.top();
+      slopeIndexStack.pop();
+      Area area = mkArea(slopeIndex, index - slopeIndex);
+      while (areaStack.size() > 0) {
+        Area areaTop = areaStack.top();
+// cout << "area top index " << areaTop.size << " " << areaTop.index <<  endl;
+        if (areaTop.index > area.index) {
+          areaStack.pop();
+          area.size += areaTop.size;
+        } else {
           break;
         }
       }
-
-      area.isFreeze = slopeStack.empty();
       areaStack.push(area);
     }
   }
 
-  int total = 0;
-  stack <int>areaSize;
-  while (areaStack.size() > 0) {
-    Area area = areaStack.top();
-    areaStack.pop();
-    total += area.size;
-    areaSize.push(area.size);
-  }
-  cout << total << endl;
-  
-  cout << areaSize.size();
-  while (areaSize.size() > 0) {
-    cout << ' ' << areaSize.top();
-    areaSize.pop();
-  }
+  cout << areaTotalSize(areaStack) << endl;
+  cout << areaStack.size();
+  trace(areaStack);
   cout << endl;
 
   return 0;
