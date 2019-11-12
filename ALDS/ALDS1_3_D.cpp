@@ -1,64 +1,74 @@
 /**
  * Areas on the Cross-Section Diagram
  * http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_3_D&lang=ja
- * 参考：Areas on the Cross-Section Diagram 解き方メモ
+ * 
+ * 参考： Areas on the Cross-Section Diagram 解き方メモを読めば理屈がわかる
  * https://mtdtx9.hatenablog.com/entry/2017/04/24/230941
  */
 
 #include<iostream>
+#include<vector>
 #include<stack>
 using namespace std;
 
-struct Area {
-  int index;
-  int size;
+struct WaterArea {
+  // 水たまりの左端の場所
+  int leftIndex;
+  // 水たまりの大きさ
+  int areaSize;
 };
 
-Area mkArea(int index, int size) {
-  Area area = Area();
-  area.index = index;
-  area.size = size;
+WaterArea mkWaterArea(int leftIndex, int areaSize) {
+  WaterArea area = WaterArea();
+  area.leftIndex = leftIndex;
+  area.areaSize = areaSize;
   return area;
 }
 
-void trace(stack <Area>A) {
-  stack <Area>B;
-  while (A.size()) {
-    B.push(A.top());
+/**
+ * それぞれの水たまりの大きさを出力する
+ */
+void trace(stack <WaterArea>A) {
+  vector <int>areaSizes(A.size());
+  while (A.size() > 0) {
+    // stackはLIFOなので、一度取り出して整頓する
+    WaterArea area = A.top();
     A.pop();
+    areaSizes.at(A.size()) = area.areaSize;
   }
 
-  while (B.size() > 0) {
-    cout << ' ' << B.top().size;
-    B.pop();
+  // 水たまりのサイズを出力
+  for (int i = 0; i < areaSizes.size(); i++) {
+    cout << ' ' << areaSizes.at(i);
   }
 }
 
-int areaTotalSize(stack <Area>A) {
-  int size = 0;
+int areaTotalSize(stack <WaterArea>A) {
+  int total = 0;
   while (A.size() > 0) {
-    Area area = A.top();
+    WaterArea area = A.top();
     A.pop();
-    size += area.size;
+    total += area.areaSize;
   }
 
-  return size;
+  return total;
 }
 
 int main() {
   // cin.tie(0);
   // ios::sync_with_stdio(false);
 
-  stack <Area>areaStack;
+  stack <WaterArea>areaStack;
   stack <int>slopeIndexStack;
+
   char slope;
-  int index = -1;
-  while (++index <= 20000) {
+  int currentIndex = -1;
+  while (++currentIndex <= 20000) {
     cin >> slope;
     if (cin.eof()) {
       break;
     } else if (slope == '\\') {
-      slopeIndexStack.push(index);
+      slopeIndexStack.push(currentIndex);
     } else if (slope == '/') {
       if (slopeIndexStack.empty()) {
         continue;
@@ -66,13 +76,13 @@ int main() {
 
       int slopeIndex = slopeIndexStack.top();
       slopeIndexStack.pop();
-      Area area = mkArea(slopeIndex, index - slopeIndex);
+      WaterArea area = mkWaterArea(slopeIndex, currentIndex - slopeIndex);
       while (areaStack.size() > 0) {
-        Area areaTop = areaStack.top();
-// cout << "area top index " << areaTop.size << " " << areaTop.index <<  endl;
-        if (areaTop.index > area.index) {
+        WaterArea areaTop = areaStack.top();
+        // cout << "area top index " << areaTop.size << " " << areaTop.index <<  endl;
+        if (areaTop.leftIndex > area.leftIndex) {
           areaStack.pop();
-          area.size += areaTop.size;
+          area.areaSize += areaTop.areaSize;
         } else {
           break;
         }
@@ -81,8 +91,11 @@ int main() {
     }
   }
 
+  // 水たまりの総サイズ
   cout << areaTotalSize(areaStack) << endl;
+  // 水たまりの数
   cout << areaStack.size();
+  // それぞれの水たまりのサイズ
   trace(areaStack);
   cout << endl;
 
