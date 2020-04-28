@@ -5,7 +5,7 @@
 
 #include<iostream>
 #include<vector>
-#include <algorithm>
+#include<algorithm>
 using namespace std;
 
 int cnt = 0;
@@ -19,10 +19,10 @@ void trace(vector <int>A) {
     cout << A.at(i);
     if (i < size - 1) {
       cout << ' ';
-    } else {
-      cout << endl;
     }
   }
+
+  cout << endl;
 }
 
 vector <int>insertionSort(vector <int>A, int N, int g) {
@@ -74,6 +74,7 @@ vector <int>shellSort(vector <int>A, int N) {
     G.push_back(1);
   }
 
+  // 小さい値から加えていったため、逆順にする必要がある
   std::reverse(G.begin(), G.end());
 
   // 選択ソートを実行する
@@ -109,4 +110,3 @@ int main() {
 
   return 0;
 }
-

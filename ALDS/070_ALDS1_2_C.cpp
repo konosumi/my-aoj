@@ -3,8 +3,7 @@
  * http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_2_C&lang=ja
  */
 
-#include<iostream>
-#include<vector>
+#include<bits/stdc++.h>
 using namespace std;
 
 void trace(vector <string>A) {
@@ -14,10 +13,10 @@ void trace(vector <string>A) {
     cout << A.at(i);
     if (i < size - 1) {
       cout << ' ';
-    } else {
-      cout << endl;
     }
   }
+  
+  cout << endl;
 }
 
 /**

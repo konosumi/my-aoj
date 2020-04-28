@@ -13,10 +13,10 @@ void trace(vector <int>A) {
     cout << A.at(i);
     if (i < size - 1) {
       cout << ' ';
-    } else {
-      cout << endl;
     }
   }
+
+  cout << endl;
 }
 
 int main() {
