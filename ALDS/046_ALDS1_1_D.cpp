@@ -3,7 +3,7 @@
  * http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_D&lang=ja
  */
 
-#include<iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 int main() {
@@ -11,9 +11,26 @@ int main() {
   cin >> n;
 
   // R = その時点の価格
+  // min = 最低価格(十分に大きな値を初期値として与えておく)
+  // profit = 利益(十分に小さな値を初期値として与えておく)
+  // int R, min_price = numeric_limits<int>::max(), profit = numeric_limits<int>::min();
+  int R, min_price = INT_MAX, profit = INT_MIN;
+  for (int i = 0; i < n; i++) {
+    cin >> R;
+
+    // 最大収益を更新する
+    profit = max(profit, R - min_price);
+    // 最低価格を更新する
+    min_price = min(min_price, R);
+  }
+
+  cout << profit << endl;
+
+  /**
+  // R = その時点の価格
   // min = 最低価格
   // profit = 利益
-  int R, min, profit;
+  int R, min = -1, profit  = -200_000;
 
   for (int i = 0; i < n; i++) {
     cin >> R;
@@ -34,8 +51,8 @@ int main() {
       min = R;
     }
   }
-
   cout << profit << endl;
-
   return 0;
+  */
+
 }
