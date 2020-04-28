@@ -2,8 +2,7 @@
  * Insertion Sort
  * http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_1_A&lang=ja
  */
-#include<iostream>
-#include<vector>
+#include <bits/stdc++.h>
 using namespace std;
 
 void trace(vector <int>A) {
@@ -11,12 +10,13 @@ void trace(vector <int>A) {
   int size = A.size();
   for (int i = 0; i < size; i++) {
     cout << A.at(i);
+
     if (i < size - 1) {
       cout << ' ';
-    } else {
-      cout << endl;
     }
   }
+
+  cout << endl;
 }
 
 int main() {

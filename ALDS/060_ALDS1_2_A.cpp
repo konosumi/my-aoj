@@ -3,8 +3,7 @@
  * http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_2_A&lang=ja
  */
 
-#include<iostream>
-#include<vector>
+#include <bits/stdc++.h>
 using namespace std;
 
 void trace(vector <int>A) {
