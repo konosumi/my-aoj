@@ -9,19 +9,19 @@
 using namespace std;
 
 int main() {
-  // int N;
-  // cin >> N;
-
   // 計算途中の値を入れておく
   vector <int>stack(100);
 
-  while (1) {
+  while (true) {
     string s;
     cin >> s;
-    // 入力が終了したら完了とする
+
+    // すべての入力値を読み終えたら完了する
     if (cin.eof()) {
       break;
+
     }
+
     if (s == "+" || s == "-" || s == "*") {
       // 演算対象の数値を2つ取り出す
       int b = stack.back();
@@ -31,11 +31,9 @@ int main() {
 
       if (s == "+") {
         stack.push_back(a + b);
-      }
-      if (s == "-") {
+      } else if (s == "-") {
         stack.push_back(a - b);
-      }
-      if (s == "*") {
+      } else if (s == "*") {
         stack.push_back(a * b);
       }
     } else {
@@ -44,7 +42,7 @@ int main() {
     }
   }
 
+  // 積まれているstackから、最終結果を取り出す
   cout << stack.back() << endl;
-  return 0;
 }
 
