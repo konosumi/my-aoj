@@ -6,7 +6,7 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
-#include <queue>
+#include<queue>
 using namespace std;
 
 struct Process {
