@@ -9,12 +9,11 @@
 using namespace std;
 
 void trace(list <int>lst) {
-  cout << lst.front();
   for (auto itr = lst.begin(); itr != lst.end(); ++itr) {
-    if (itr == lst.begin()) {
-      continue;
+    if (itr != lst.begin()) {
+      cout << ' ';
     }
-    cout << ' ';
+
     cout << *itr;
   }
 
@@ -35,18 +34,20 @@ void trace(list <int>lst) {
 }
 
 int main() {
-  cin.tie(0);
+  // 入出力の高速化
+  cin.tie(nullptr);
   ios::sync_with_stdio(false);
 
   int N;
   cin >> N;
 
   // プロセスの格納
-  string command;
-  int number;
   list <int>lst;
   for (int i = 0; i < N; i++) {
+    string command;
     cin >> command;
+    int number;
+
     if (command == "insert") {
       cin >> number;
       lst.push_front(number);
@@ -66,6 +67,4 @@ int main() {
   }
 
   trace(lst);
-
-  return 0;
 }
