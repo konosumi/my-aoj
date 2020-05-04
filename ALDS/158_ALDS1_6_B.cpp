@@ -24,7 +24,7 @@ int partition(vector<int> &A, int p, int r) {
   for (int j = p; j < r; j++) {
     if (A.at(j) <= x) {
       i = i+1;
-cout << "swap" << i << ' ' << j;
+      // cout << "swap" << i << ' ' << j;
       swap(A.at(i), A.at(j));
     }
   }
