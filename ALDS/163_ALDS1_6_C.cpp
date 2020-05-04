@@ -15,8 +15,8 @@ quicksort(A, p, r)
 */
 
 struct Card {
-  char suit;
-  int value;
+  char suit; // D,H..
+  int value; // 1..13
 };
 
 int partition(vector<Card> &A, int p, int r) {
@@ -51,7 +51,7 @@ string isStable(vector<Card>A, vector<Card>S, int N) {
     for (int j = 0; j < S.size(); j++) {
       // 一致する要素が登場したら、一致した要素は安定的であるとして削除する
       if (S.at(j).suit == A.at(i).suit && S.at(j).value == A.at(i).value) {
-        S.erase(S.begin() + j, S.begin() + j + 1);
+        S.erase(S.begin() + j);
         break;
       }
       // 一致する要素が登場する前に、数字が同じ他のカードが登場してしまった
@@ -83,8 +83,11 @@ int main() {
     A.at(i) = c;
   }
 
+  // ソート前の配列をAとし、ソート対象の配列をSとする
   vector<Card> S = A;
   quickSort(S, 0, n - 1);
+
+  // 結果の出力
   cout << isStable(A, S, n) << endl;
   printCard(S);
 }
