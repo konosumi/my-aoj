@@ -24,7 +24,7 @@ long long merge(vector<int> &A, int left, int mid, int right) {
   R.at(n2) = INT_MAX;
   int i = 0;
   int j = 0;
-  long long compareCount = 0;
+  long long cnt = 0;
   for (int k = left; k < right; k++) {
     if (L.at(i) <= R.at(j)) {
       A.at(k) = L.at(i);
@@ -32,12 +32,13 @@ long long merge(vector<int> &A, int left, int mid, int right) {
     } else {
       A.at(k) = R.at(j);
       j = j + 1;
-
-      // 比較回数をカウントする
-      compareCount += n1 - i; // = mid + j - k - 1
+      // L.at(i) > R.at(j)
+      // Lに含まれマージ後にR[j]よりも後に移動する要素の数
+      // つまり、バブルソートにおいても反転される回数となる
+      cnt += n1 - i; // = mid + j - k - 1
     }
   }
-  return compareCount;
+  return cnt;
 }
 
 long long mergeSort(vector<int> &A, int left, int right) {
@@ -64,6 +65,6 @@ int main(){
   }
 
   // マージソートの実行
-  long long compareCount = mergeSort(S, 0, n);
-  cout << compareCount << endl;
+  long long cnt = mergeSort(S, 0, n);
+  cout << cnt << endl;
 }
